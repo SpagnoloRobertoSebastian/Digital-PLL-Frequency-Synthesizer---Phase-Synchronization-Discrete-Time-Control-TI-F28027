@@ -1,0 +1,30 @@
+D G "SQRT2" 1 38 "1.4142135623730950"
+D G "__PCH__" 1 207 ""5.015""
+D G "__DEVICE__" 1 207 ""
+D G "__DATE__" 1 207 ""06-jun.-23""
+D G "__TIME__" 1 207 ""20:47:28"" "*  Title: control.c"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+C G "" 0 1 1 "*"
+D G "MATH_H" 1 30 ""
+D G "PI" 1 35 "3.1415926535897932"
+D G "SQRT2" 1 38 "1.4142135623730950"
+C L "CEIL_FLOOR" 1 2 3 "FUNCTION"
+V L "x" 1 45 "float" `35 
+V L "n" 1 45 "int8" `36 
+F G "CEIL_FLOOR" 1 46 "float(float x,int8 n)" `34 
+V L "y" 1 47 "float" `37 
+V L "res" 1 47 "float" `38 
+V L "l" 1 48 "int16" `39 
+V L "s" 1 49 "int1" `40 

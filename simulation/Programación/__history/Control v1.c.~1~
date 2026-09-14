@@ -1,0 +1,107 @@
+/*
+ *  Title: control.c
+ *	Version:
+ *  Description:
+ *  Created:  16/07/2014 NW
+ *  Last Mod: xx/xx/xxxx XX
+ *  Author: C�tedra "Sistemas de Control"
+ *  		Departamento de Electr�nica
+ *  		Facultad de Ingenier�a
+ *  		Universidad Nacional de Mar del Plata
+ *
+ *	En este archivo se implementa la funci�n PLL_SdC_function() en la cual debe ser incluida la implementaci�n del PLL.
+ *	Entradas:
+ * 		Input10V: 0-10V
+ *	Salidas:
+ *		*UserLED / *UserGPIO: 0(0V):OFF-1(3.3V):ON
+ *		Output3_3V: 0-3.3V
+
+ */
+
+#include <math.h>
+int Output_Selector=0;
+
+float PLL_SdC_function(float Input10V, int *UserLED, int *UserGPIO) // return Output3_3V
+{
+float Output3_3V=1.65;
+float Referencia, SenialGenerada;		// Mapea entrada y salida a +-1V
+
+const CorreccionFase = 0;				// Corrección de la fase entre las señales
+const IncrementoLinealDeFase = 0.31416;	// Escalón normal de la rampoa de fase 2pi / 20
+
+// historia del filtro
+static float producto_1;				// Entrada al filtro en t= k-1
+static float producto_2;				// Entrada al filtro en t= k-2
+static float DiferenciaFase_1;			// salida del filtro en t= k-1
+
+// historia del compensador
+static float ErrorDeFase_1;				// Entrada al compensador en t= k-1
+static float DeltaOmega_1;				// salida del compensador en t= k-1
+
+static float fase;						// rampa de fase
+
+
+	// Input conditioning
+	Referencia = (Input10V/5.0)-1;
+
+	// --**--**-- Inicio del codigo del alumno --**--**--
+
+	SenialGenerada = sin(fase);
+
+	Producto = Referencia * SenialGenerada;
+
+	// Aplicar filtrado al producto de las señales
+	// 	y(k)= 0.0618551 x(k-1) + 0.9690724 y(k-1)
+
+	DiferenciaFase = 0.0618551 * Producto_1 + 0.9690724 * DiferenciaFase_1;
+
+	// Si se establece una relación diferente a 90°
+	ErrorDeFase = DiferenciaFase + CorreccionFase;
+
+	// Aplicar el compensador
+	// y(k)=  63.6619772 x(k) - 63.4619772  x(k-1) + y(k-1)
+
+	DeltaOmega = 63.6619772 * ErrorDeFase - 63.4619772 * ErrorDeFase_1 + DeltaOmega_1;
+
+	// Ajustar la fase actual con el resultado de la compensación
+	fase += DeltaOmega;		 	
+
+	// Generar nuevamente la muestra de la señal, pero con la fase corregida
+	SenialGenerada = sin(fase);
+
+	// Integración de la fase con control de desborde para tomarla como inicio
+	// en el ciclo siguiente.
+	fase += IncrementoLinealDeFase; 	
+	if( fase > 6.2831853)
+	{
+		Fase -= 6.2831853
+	}
+    
+    // Encender LED de “enganchado” cuando la diferencia de fase sea despreciable
+    if(DiferenciaFase < 0.001)
+    {
+        &UserLED = 1;
+    }
+    else
+    {
+        &UserLED = 0;
+    }
+
+	// Actualización de la historia de las variables
+	producto_2       = producto_1;
+	producto_1       = producto;
+	DiferenciaFase_1 = DiferenciaFase;
+	ErrorDeFase_1    = ErrorDeFase;
+	DeltaOmega_1     = DeltaOmega;
+
+
+	// --**--**-- Fin del codigo del alumno    --**--**--
+
+
+	// Output conditioning
+	Output3_3V= (SenialGenerada+1.0)*3.3/2.0;
+
+	return(Output3_3V);
+}
+
+

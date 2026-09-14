@@ -1,0 +1,36 @@
+#include <18F4550.h>
+#include <math.h>
+#fuses XT            //Reloj interno <= 4MHz
+#fuses NOMCLR        //Pin de entrada RE3 habilitado
+#fuses PUT           //Power up Timer: es un Timer que permite hacer reset por software
+
+//Uso de librerias
+#use delay (clock=4000000)
+#use fast_io(d)                  //Llamo la libreria del puerto D
+
+void main (void)
+{ //Hay que configurar los puertos
+   int leds=0b11111111;          //Delcaro la variable de 1 byte con su respectivos valores
+   set_tris_d(0b00000000);       //Configuro los bit del puerto D como salida
+   
+   //declarando variables
+  // wL=2*PI*50;        
+   dw_k=0;
+   
+   // historia del filtro
+static float p_k;                // Entrada al filtro en t= k
+static float p_k_1;              // Entrada al filtro en t= k-1
+static float pm_k;               // salida del filtro en t= k o p media
+
+// historia del compensador
+static float em_k;                     // Entrada al compensador en t= k o la media del error
+static float em_k_1;                     // Entrada al compensador en t= k-1 
+static float DeltaOmega_1;            // salida del compensador en t= k-1
+
+   while(true)
+   {
+      
+     
+               
+   }
+}
