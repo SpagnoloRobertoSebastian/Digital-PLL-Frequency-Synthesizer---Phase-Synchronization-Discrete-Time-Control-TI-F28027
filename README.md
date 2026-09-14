@@ -181,4 +181,20 @@ Frequency/phase correction.
 This makes the implementation suitable for real-time execution and demonstrates the translation of a control-system model into embedded software.
 
 ![Digital Architecture](images/algoritmo.png)
-## 
+
+## Why This Project Matters
+
+The main value of this project is not simply generating a 50 Hz sine wave.
+
+The important engineering challenge was to take a continuous-time control model, analyze its stability, design the required compensation, transform the system into a discrete-time implementation, and finally execute the resulting algorithm in real time on embedded hardware.
+
+#Technologies
+- C / ANSI C
+- Digital Signal Processing
+- Discrete-Time Control
+- PLL
+- Frequency Synthesis
+- Phase Synchronization
+- Scilab
+- Texas Instruments C2000
+- LaunchPad XL F28027
